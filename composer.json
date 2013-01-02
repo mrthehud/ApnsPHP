@@ -15,6 +15,7 @@
     },
     "autoload":     {
         "psr-0": { "ApnsPHP\\": "ApnsPHP/" }
+		},
     "minimum-stability": "dev-master"
 }
 
