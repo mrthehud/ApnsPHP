@@ -70,7 +70,7 @@ abstract class ApnsPHP_Abstract
 	/**
 	 * Constructor.
 	 *
-	 * @param  $nEnvironment @type integer Environment.
+	 * @param  $nEnvironment @type integer Environment. OR 'prod' for self::ENVIRONMENT_PRODUCTION, 'dev', 'test', etc for self::ENVIRONMENT_SANDBOX 
 	 * @param  $sProviderCertificateFile @type string Provider certificate file
 	 *         with key (Bundled PEM).
 	 * @throws ApnsPHP_Exception if the environment is not
@@ -78,6 +78,16 @@ abstract class ApnsPHP_Abstract
 	 */
 	public function __construct($nEnvironment, $sProviderCertificateFile)
 	{
+		if (!is_numeric($nEnvironment)) {
+			switch (strtolower($nEnvironment)) {
+				case 'prod':
+					$nEnvironment = self::ENVIRONMENT_PRODUCTION;
+					break;
+				default:
+					$nEnvironment = self::ENVIRONMENT_SANDBOX;
+			}
+		}
+		
 		if ($nEnvironment != self::ENVIRONMENT_PRODUCTION && $nEnvironment != self::ENVIRONMENT_SANDBOX) {
 			throw new ApnsPHP_Exception(
 				"Invalid environment '{$nEnvironment}'"
